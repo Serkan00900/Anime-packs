@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anime Texture Packs</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Marked.js to render Modrinth's markdown descriptions safely -->
@@ -46,8 +47,14 @@
         <!-- Top Navigation Bar -->
         <nav class="sticky top-0 z-50 glass-panel border-b border-white/5 transition-colors duration-300">
             <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-                <a href="." id="nav-home" class="flex items-center gap-2 font-bold text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-slate-100 to-slate-400">
-                    ANIME<span class="text-red-500">PACKS</span>
+                <a href="." id="nav-home" class="flex items-center gap-2.5 font-bold text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-slate-100 to-slate-400 group">
+                    <!-- Website SVG Brand Icon Wrapper -->
+                    <div class="p-2 rounded-xl bg-gradient-to-br from-red-500/20 to-red-600/5 border border-red-500/30 group-hover:border-red-500/60 transition-colors shadow-inner text-red-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V16zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V16z" />
+                        </svg>
+                    </div>
+                    <span>ANIME<span class="text-red-500">PACKS</span></span>
                 </a>
                 <div class="flex items-center gap-4 text-sm font-medium text-slate-400">
                     <a href="." class="hover:text-white transition-colors">Gallery</a>
@@ -81,9 +88,16 @@
 
                 <!-- Header + Filter Row Controls -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-l-4 border-red-500 pl-4 py-1">
-                    <div>
-                        <h1 class="text-3xl font-black tracking-tight text-white">ALL TEXTURE PACKS</h1>
-                        <p class="text-slate-400 text-sm mt-1">Direct integration with Modrinth ecosystem</p>
+                    <div class="space-y-1">
+                        <div class="flex flex-wrap items-center gap-3">
+                            <h1 class="text-3xl font-black tracking-tight text-white">ALL TEXTURE PACKS</h1>
+                            <!-- Modrinth Profile Global Downloads Milestone Target Badge -->
+                            <div id="profile-downloads-badge" class="inline-flex items-center gap-1 text-[11px] font-black tracking-wide text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-2.5 py-1 rounded-xl shadow-inner opacity-0 transition-opacity duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <span id="profile-total-downloads">0</span> Total Downloads
+                            </div>
+                        </div>
+                        <p class="text-slate-400 text-sm">Direct integration with Modrinth ecosystem</p>
                     </div>
                     
                     <!-- Sorting Dropdown Container Element -->
@@ -105,8 +119,24 @@
                     <div class="h-64 rounded-xl bg-white/5 animate-pulse"></div>
                 </div>
 
+                <!-- Gallery Anchor Target for scroll-snapping pagination jumps -->
+                <div id="gallery-top-anchor"></div>
+
                 <!-- Dynamic Target Cards Container -->
                 <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden"></div>
+
+                <!-- Pagination Footer Navigation Interface Bar -->
+                <div id="pagination-controls" class="flex items-center justify-between pt-4 hidden">
+                    <button id="btn-prev-page" onclick="changePage(-1)" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold text-slate-300 glass-panel border border-white/10 rounded-xl hover:text-white hover:border-red-500/40 disabled:opacity-30 disabled:pointer-events-none transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
+                        Previous
+                    </button>
+                    <span id="pagination-info" class="text-xs font-bold tracking-wider text-slate-500 uppercase">Page 1 of 1</span>
+                    <button id="btn-next-page" onclick="changePage(1)" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold text-slate-300 glass-panel border border-white/10 rounded-xl hover:text-white hover:border-red-500/40 disabled:opacity-30 disabled:pointer-events-none transition-all">
+                        Next
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+                    </button>
+                </div>
             </section>
 
             <!-- VIEW 2: INDIVIDUAL PACK DETAIL PAGE (Hidden by default) -->
@@ -219,12 +249,18 @@
         const DISCORD_INVITE_URL = "https://discord.gg/83SJPnncCA";
         const GOOGLE_FORMS_URL = "https://forms.gle/YkRH16Ws36CXaWCQ9";
 
-        // Global structural cache and slider control variables
+        // Global structural cache, sorting, and pagination variables
         let rawProjectsData = [];
+        let sortedProjectsData = []; // Secondary cache holding processed array variants
         let projectsCache = {};
+        
         let currentSlideIndex = 0;
         let slideInterval = null;
         let currentSortMode = "downloads";
+        
+        // Pagination state monitors
+        let currentPageIndex = 1;
+        const PACKS_PER_PAGE = 9;
 
         // Application State Engine initialization
         async function initApp() {
@@ -262,19 +298,30 @@
                 
                 rawProjectsData = await response.json();
                 
-                // Map out data into memory cache objects
+                let aggregatedDownloadsCount = 0;
+                
+                // Map out data into memory cache objects and calculate total sums
                 rawProjectsData.forEach(project => {
+                    aggregatedDownloadsCount += project.downloads || 0;
                     projectsCache[project.id] = project;
                     if (project.slug) {
                         projectsCache[project.slug] = project;
                     }
                 });
 
+                // Display Total Dynamic Downloads Banner
+                const totalDownloadsSpan = document.getElementById('profile-total-downloads');
+                if (totalDownloadsSpan) {
+                    totalDownloadsSpan.innerText = aggregatedDownloadsCount.toLocaleString();
+                    const badge = document.getElementById('profile-downloads-badge');
+                    badge.classList.remove('opacity-0');
+                }
+
                 // Generate permanent slide content (always based on top downloads)
                 buildSlideshow(rawProjectsData);
                 
-                // Render initial primary gallery grid
-                processAndRenderGallery();
+                // Process initial sort configuration and page array slices
+                processAndSortDataset();
             } catch (err) {
                 console.error("Critical architecture initialization failure: ", err);
                 document.getElementById('gallery-loading').innerHTML = `
@@ -402,73 +449,105 @@
         // Handle sort dropdown change selection
         function handleSortChange(value) {
             currentSortMode = value;
-            processAndRenderGallery();
+            currentPageIndex = 1; // Always reset back to page 1 on active re-sorting
+            processAndSortDataset();
         }
 
-        // Process sorting mechanics before forwarding array payload to grid render engine
-        function processAndRenderGallery() {
-            let processedList = [...rawProjectsData];
+        // Core compilation layer tracking user sorting adjustments
+        function processAndSortDataset() {
+            sortedProjectsData = [...rawProjectsData];
 
             if (currentSortMode === "downloads") {
-                processedList.sort((a, b) => b.downloads - a.downloads);
+                sortedProjectsData.sort((a, b) => b.downloads - a.downloads);
             } else if (currentSortMode === "random") {
-                // Fisher-Yates shuffle implementation
-                for (let i = processedList.length - 1; i > 0; i--) {
+                for (let i = sortedProjectsData.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
-                    [processedList[i], processedList[j]] = [processedList[j], processedList[i]];
+                    [sortedProjectsData[i], sortedProjectsData[j]] = [sortedProjectsData[j], sortedProjectsData[i]];
                 }
             }
 
-            renderGallery(processedList);
+            renderPaginatedGallery();
         }
 
-        // Display card array loop configuration markup rendering interface
-        function renderGallery(projects) {
+        // Slices data cache into explicit 9 pack intervals and processes elements out to layout models
+        function renderPaginatedGallery() {
             const grid = document.getElementById('gallery-grid');
             const loading = document.getElementById('gallery-loading');
+            const paginationControls = document.getElementById('pagination-controls');
+            
             grid.innerHTML = '';
 
-            if (projects.length === 0) {
+            const totalItemCount = sortedProjectsData.length;
+            const maxPageCount = Math.ceil(totalItemCount / PACKS_PER_PAGE) || 1;
+
+            // Constrain indices within safety boundaries
+            if (currentPageIndex > maxPageCount) currentPageIndex = maxPageCount;
+            if (currentPageIndex < 1) currentPageIndex = 1;
+
+            // Extract exact 9-item subset slice based on active page indexing variables
+            const startIndex = (currentPageIndex - 1) * PACKS_PER_PAGE;
+            const endIndex = startIndex + PACKS_PER_PAGE;
+            const targetPageSlice = sortedProjectsData.slice(startIndex, endIndex);
+
+            if (targetPageSlice.length === 0) {
                 grid.innerHTML = `
                     <div class="col-span-full p-12 text-center glass-panel rounded-2xl text-slate-400">
                         No public projects discovered on this profile page yet.
                     </div>
                 `;
-            }
+                paginationControls.classList.add('hidden');
+            } else {
+                // Populate visible subset cards out to UI container nodes
+                targetPageSlice.forEach(project => {
+                    const icon = project.icon_url || 'https://img.icons8.com/color/96/minecraft-main.png';
+                    const banner = getFeaturedBanner(project);
 
-            projects.forEach(project => {
-                const icon = project.icon_url || 'https://img.icons8.com/color/96/minecraft-main.png';
-                const banner = getFeaturedBanner(project);
+                    const card = document.createElement('div');
+                    card.className = 'glass-panel rounded-2xl overflow-hidden group hover:scale-[1.02] transition-all duration-300 flex flex-col cursor-pointer shadow-lg shadow-black/20';
+                    card.onclick = () => navigateToPack(project.slug || project.id);
 
-                const card = document.createElement('div');
-                card.className = 'glass-panel rounded-2xl overflow-hidden group hover:scale-[1.02] transition-all duration-300 flex flex-col cursor-pointer shadow-lg shadow-black/20';
-                card.onclick = () => navigateToPack(project.slug || project.id);
-
-                card.innerHTML = `
-                    <div class="h-32 w-full bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500" style="background-image: url('${banner}')"></div>
-                    <div class="p-5 flex gap-4 flex-1 items-start -mt-8 relative z-10">
-                        <img src="${icon}" alt="${project.title}" class="w-16 h-16 rounded-xl border-4 border-[#141419] bg-[#1a1a24] shadow-md object-cover">
-                        <div class="flex-1 min-w-0 pt-8">
-                            <h3 class="text-lg font-bold text-white group-hover:text-red-400 transition-colors truncate">${project.title}</h3>
-                            <p class="text-slate-400 text-xs line-clamp-2 mt-1 leading-relaxed">${project.description || 'No description assigned'}</p>
+                    card.innerHTML = `
+                        <div class="h-32 w-full bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500" style="background-image: url('${banner}')"></div>
+                        <div class="p-5 flex gap-4 flex-1 items-start -mt-8 relative z-10">
+                            <img src="${icon}" alt="${project.title}" class="w-16 h-16 rounded-xl border-4 border-[#141419] bg-[#1a1a24] shadow-md object-cover">
+                            <div class="flex-1 min-w-0 pt-8">
+                                <h3 class="text-lg font-bold text-white group-hover:text-red-400 transition-colors truncate">${project.title}</h3>
+                                <p class="text-slate-400 text-xs line-clamp-2 mt-1 leading-relaxed">${project.description || 'No description assigned'}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="px-5 pb-5 pt-2 mt-auto border-t border-white/5 flex items-center justify-between text-xs text-slate-500">
-                        <span class="flex items-center gap-1 font-medium text-slate-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" /></svg>
-                            ${project.downloads.toLocaleString()} downloads
-                        </span>
-                        <span class="text-red-500 font-bold group-hover:underline inline-flex items-center gap-0.5">
-                            View Pack
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                        </span>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
+                        <div class="px-5 pb-5 pt-2 mt-auto border-t border-white/5 flex items-center justify-between text-xs text-slate-500">
+                            <span class="flex items-center gap-1 font-medium text-slate-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" /></svg>
+                                ${project.downloads.toLocaleString()} downloads
+                            </span>
+                            <span class="text-red-500 font-bold group-hover:underline inline-flex items-center gap-0.5">
+                                View Pack
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                            </span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                // Update bottom pagination utility bars
+                document.getElementById('pagination-info').innerText = `Page ${currentPageIndex} of ${maxPageCount}`;
+                document.getElementById('btn-prev-page').disabled = (currentPageIndex === 1);
+                document.getElementById('btn-next-page').disabled = (currentPageIndex === maxPageCount);
+                
+                paginationControls.classList.remove('hidden');
+            }
 
             loading.classList.add('hidden');
             grid.classList.remove('hidden');
+        }
+
+        // Page manipulation processing state action handler
+        function changePage(directionOffset) {
+            currentPageIndex += directionOffset;
+            renderPaginatedGallery();
+            
+            // Focus scrolling views smoothly back up to the anchor target block point 
+            document.getElementById('gallery-top-anchor').scrollIntoView({ behavior: 'smooth' });
         }
 
         // Render data configurations inside specific dynamic identifier views
