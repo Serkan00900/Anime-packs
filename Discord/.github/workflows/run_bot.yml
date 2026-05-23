@@ -30,3 +30,4 @@ jobs:
       with:
         commit_message: "Update last posted pack cache [skip ci]"
         file_pattern: 'last_posted_project.txt'
+        disable_plugins: true
