@@ -8,6 +8,9 @@ on:
 permissions:
   contents: write # Required for the cache file saving process
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   run-bot:
     runs-on: ubuntu-latest
