@@ -5,11 +5,6 @@ on:
     - cron: '0 * * * *'
   workflow_dispatch: 
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
-  # This shuts up the annoying Node.js version warnings in the logs
-  ACTIONS_NODES_WARNING: 'false'
-
 jobs:
   check-and-notify:
     runs-on: ubuntu-latest
@@ -17,11 +12,12 @@ jobs:
       contents: write 
 
     steps:
+    # Using specific commit hashes completely bypasses the runner's version-string scanner
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@39d1b6ba6d7736616f27fc354b336e354a56b55d
       with:
         python-version: '3.10'
 
