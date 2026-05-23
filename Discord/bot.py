@@ -3,7 +3,7 @@ import os
 import requests
 
 # --- CONFIGURATION ---
-MODRINTH_USERNAME = "HypX2L"  
+MODRINTH_USERNAME = "Serkan00900"  
 CACHE_FILE = "Discord/last_posted_project.txt"
 USER_AGENT = "MyDiscordProfileBot/1.0 (contact@example.com)"
 # ---------------------
@@ -65,8 +65,8 @@ def check_profile_and_post():
         headers={"Content-Type": "application/json"},
     )
 
-    # FIXED: Check array container elements safely
-    if webhook_res.status_code in [200, 204]:
+    # FIXED: Checking status codes against a tuple of successful values (200, 204)
+    if webhook_res.status_code in (200, 204):
         print(f"🚀 Success! Posted '{title}' to Discord.")
         os.makedirs(os.path.dirname(CACHE_FILE), exist_ok=True)
         with open(CACHE_FILE, "w") as f:
