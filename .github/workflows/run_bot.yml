@@ -2,11 +2,14 @@ name: Run Modrinth Tracker Bot
 
 on:
   schedule:
-    - cron: '0 * * * *' # Runs automatically every single hour
-  workflow_dispatch: # Gives you the manual button to test it instantly
+    - cron: '0 * * * *' # Wakes up automatically every single hour
+  workflow_dispatch: # Allows you to press a button to test it instantly
 
 permissions:
-  contents: write
+  contents: write # Allows the bot to write history to prevent duplicate alerts
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true" # Clears the Node.js warning layout
 
 jobs:
   run-bot:
