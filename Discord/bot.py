@@ -62,8 +62,8 @@ def check_profile_and_post():
         headers={"Content-Type": "application/json"},
     )
 
-    # Cleaned status code success logic (200 & 204 are valid Discord API responses)
-    if webhook_res.status_code in [200, 204]:
+    # SUCCESS CHECK FIX: Evaluates correctly against valid Discord status return codes
+    if webhook_res.status_code in (200, 204):
         print(f"🚀 Success! Posted '{title}' to Discord.")
         os.makedirs(os.path.dirname(CACHE_FILE), exist_ok=True)
         with open(CACHE_FILE, "w") as f:
@@ -74,3 +74,4 @@ def check_profile_and_post():
 
 if __name__ == "__main__":
     check_profile_and_post()
+
