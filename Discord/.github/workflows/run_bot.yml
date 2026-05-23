@@ -2,8 +2,11 @@ name: Run Modrinth Tracker Bot
 
 on:
   schedule:
-    - cron: '0 * * * *' # Automatically runs every single hour
-  workflow_dispatch: # Allows you to run it manually with a button click
+    - cron: '0 * * * *' # Wakes up automatically every single hour
+  workflow_dispatch: # Allows you to press a button to test it instantly
+
+permissions:
+  contents: write # Allows the bot to write history to prevent duplicate alerts
 
 jobs:
   run-bot:
@@ -23,11 +26,10 @@ jobs:
     - name: Run Script and Check Updates
       env:
         DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-      run: python bot.py
+      run: python Discord/bot.py  # Tells GitHub to look inside the Discord folder
 
     - name: Save Cache for Next Run
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: "Update last posted pack cache [skip ci]"
-        file_pattern: 'last_posted_project.txt'
-        disable_plugins: true
+        file_pattern: 'Discord/last_posted_project.txt' # Saves cache inside the Discord folder
