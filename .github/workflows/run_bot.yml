@@ -8,20 +8,17 @@ on:
 permissions:
   contents: write # Allows the bot to write history to prevent duplicate alerts
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true" # Clears the Node.js warning layout
-
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4 # Fully compatible version
 
     - name: Set Up Python Environment
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v5 # Fully compatible version
       with:
-        python-version: '3.10'
+        python-version: '3.11'
 
     - name: Install Dependencies
       run: pip install requests
