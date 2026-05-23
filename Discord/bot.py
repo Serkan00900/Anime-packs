@@ -3,7 +3,7 @@ import os
 import requests
 
 # --- CONFIGURATION ---
-MODRINTH_USERNAME = "Serkan00900"  
+MODRINTH_USERNAME = "HypX2L"  
 CACHE_FILE = "Discord/last_posted_project.txt"
 USER_AGENT = "MyDiscordProfileBot/1.0 (contact@example.com)"
 # ---------------------
@@ -11,8 +11,9 @@ USER_AGENT = "MyDiscordProfileBot/1.0 (contact@example.com)"
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
 def check_profile_and_post():
+    # Verify if your webhook secret is properly fetched
     if not DISCORD_WEBHOOK_URL or DISCORD_WEBHOOK_URL.strip() == "":
-        print("❌ CRITICAL ERROR: DISCORD_WEBHOOK_URL is missing or blank in GitHub Secrets!")
+        print("❌ CRITICAL ERROR: DISCORD_WEBHOOK_URL is missing in GitHub Secrets!")
         return
 
     headers = {"User-Agent": USER_AGENT}
@@ -28,6 +29,7 @@ def check_profile_and_post():
         print("ℹ️ No projects found on this profile yet.")
         return
 
+    # Filter/Sort to grab the newest project
     projects.sort(key=lambda x: x.get("published", ""), reverse=True)
     newest_project = projects
 
@@ -37,6 +39,7 @@ def check_profile_and_post():
     description = newest_project.get("description", "")
     icon_url = newest_project.get("icon_url", "")
 
+    # Cache handling logic
     if os.path.exists(CACHE_FILE):
         with open(CACHE_FILE, "r") as f:
             if f.read().strip() == project_id:
@@ -62,8 +65,8 @@ def check_profile_and_post():
         headers={"Content-Type": "application/json"},
     )
 
-    # SUCCESS CHECK FIX: Evaluates correctly against valid Discord status return codes
-    if webhook_res.status_code in (200, 204):
+    # FIXED: Check array container elements safely
+    if webhook_res.status_code in [200, 204]:
         print(f"🚀 Success! Posted '{title}' to Discord.")
         os.makedirs(os.path.dirname(CACHE_FILE), exist_ok=True)
         with open(CACHE_FILE, "w") as f:
@@ -74,4 +77,3 @@ def check_profile_and_post():
 
 if __name__ == "__main__":
     check_profile_and_post()
-
