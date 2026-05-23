@@ -16,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository Code
-      uses: actions/checkout@v4.2.2 # Fixed version that supports Node 24 runners
+      uses: actions/checkout@v4
 
     - name: Set Up Python Environment
-      uses: actions/setup-python@v5.4.0 # Fixed version that supports Node 24 runners
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
 
@@ -32,7 +32,7 @@ jobs:
       run: python Discord/bot.py
 
     - name: Save Cache for Next Run
-      uses: stefanzweifel/git-auto-commit-action@v5.1.0 # Updated for full Node 24 compatibility
+      uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: "Update last posted pack cache [skip ci]"
         file_pattern: 'Discord/last_posted_project.txt'
