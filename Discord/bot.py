@@ -3,7 +3,7 @@ import os
 import requests
 
 # --- CONFIGURATION ---
-MODRINTH_USERNAME = "Serkan00900"  
+MODRINTH_USERNAME = "HypX2L"  
 CACHE_FILE = "Discord/last_posted_project.txt"
 USER_AGENT = "MyDiscordProfileBot/1.0 (contact@example.com)"
 # ---------------------
