@@ -2,21 +2,18 @@ name: Run Modrinth Tracker Bot
 
 on:
   schedule:
-    - cron: '0 * * * *' # Wakes up automatically every single hour
-  workflow_dispatch: # Allows manual button click to test instantly
+    - cron: '0 * * * *' # Runs automatically every hour
+  workflow_dispatch: # Allows manual button click testing
 
 permissions:
-  contents: write # Required for the cache file saving process
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  contents: write # Grants write permissions to save the cache file
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4 # Maintained v4 components auto-forward into node24 runtimes
 
     - name: Set Up Python Environment
       uses: actions/setup-python@v5
